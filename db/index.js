@@ -97,8 +97,12 @@ async function createPost({
     `, [authorId, title, content]);
 
     const tagList = await createTags(tags);
+    // console.log(tagList);
 
-    return await addTagsToPost(post.id, tagList);
+    // return await addTagsToPost(post.id, tagList);
+    await addTagsToPost(post.id, tagList);
+
+    console.log("Finished add to post function");
   } catch (error) {
     throw error;
   }
@@ -190,6 +194,11 @@ async function getAllPosts() {
       post => getPostById( post.id )
     ));
 
+      /// loop through the posts
+      // for (let i = 0; i < posts.length; i++) {
+      //   console.log(posts[i].tags);
+      // }
+      // console.log(post.index[i].tags)
     return posts;
   } catch (error) {
     throw error;
@@ -280,12 +289,6 @@ async function createTags(tagList) {
     (_, index) => `$${index + 1}`).join(', ');
   // then we can use (${ selectValues }) in our string template
 
-  // Here's the starter code they gave..
-  // try {
-  // } catch (error) {
-  //   throw error;
-  // }
-
   try {
     await client.query(`
       INSERT INTO tags(name)
@@ -293,12 +296,12 @@ async function createTags(tagList) {
       ON CONFLICT (name) DO NOTHING;
     `, tagList);
 
-    const { rows: [tag] } = await client.query(`
+    const { rows } = await client.query(`
       SELECT * FROM tags
       WHERE name IN (${selectValues});
     `, tagList);
 
-    return tag;
+    return rows;
   } catch (error) {
     throw error;
   }

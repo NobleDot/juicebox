@@ -11,6 +11,7 @@ const {
   getAllPosts,
   getPostById,
   getPostsByUser,
+  getPostsByTagName,
   createTags
 } = require('./index');
 
@@ -37,6 +38,8 @@ async function createTables() {
   try {
     console.log("Starting to build tables...");
 
+    // Dont forget to put quotes around capital letters in sql (see postId)!
+    
     await client.query(`
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -44,7 +47,7 @@ async function createTables() {
         password varchar(255) NOT NULL,
         name varchar(255) NOT NULL,
         location varchar(255) NOT NULL,
-        active boolean DEFAULT true
+        active BOOLEAN DEFAULT true
       );
       CREATE TABLE posts (
         id SERIAL PRIMARY KEY,
@@ -54,15 +57,14 @@ async function createTables() {
         active BOOLEAN DEFAULT true
       );
 
-      // So, now I need to make something for tags and post_tags
       CREATE TABLE tags (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL
       );
       CREATE TABLE post_tags (
-        postId INTEGER REFERENCES posts(id),
-        tagId INTEGER PREFERENCES tags(id),
-        AUNIQUE ("postId", "tagId")
+        "postId" INTEGER REFERENCES posts(id),
+        "tagId" INTEGER REFERENCES tags(id),
+        UNIQUE ("postId", "tagId")
       );
     `);
 
@@ -134,64 +136,6 @@ async function createInitialPosts() {
     throw error;
   }
 }
-
-// ------------
-// They tell use to remove this after updated createPost and createInitialPost
-// ------------
-
-// async function createInitialTags() {
-//   try {
-//     console.log("Starting to create tags...");
-
-//     const [happy, sad, inspo, catman] = await createTags([
-//       '#happy', 
-//       '#worst-day-ever', 
-//       '#youcandoanything',
-//       '#catmandoeverything'
-//     ]);
-
-//     const [postOne, postTwo, postThree] = await getAllPosts();
-
-//     await addTagsToPost(postOne.id, [happy, inspo]);
-//     await addTagsToPost(postTwo.id, [sad, inspo]);
-//     await addTagsToPost(postThree.id, [happy, catman, inspo]);
-
-//     console.log("Finished creating tags!");
-//   } catch (error) {
-//     console.log("Error creating tags!");
-//     throw error;
-//   }
-// }
-
-
-//-----------
-// The guide says we remove this function,
-// but I'm confused with my error screen and will keep this here
-// just in case
-//-----------
-// async function createInitialTags() {
-//   try {
-//     console.log("Starting to create tags...");
-
-//     const [happy, sad, inspo, catman] = await createTags([
-//       '#happy', 
-//       '#worst-day-ever', 
-//       '#youcandoanything',
-//       '#catmandoeverything'
-//     ]);
-
-//     const [postOne, postTwo, postThree] = await getAllPosts();
-
-//     await addTagsToPost(postOne.id, [happy, inspo]);
-//     await addTagsToPost(postTwo.id, [sad, inspo]);
-//     await addTagsToPost(postThree.id, [happy, catman, inspo]);
-
-//     console.log("Finished creating tags!");
-//   } catch (error) {
-//     console.log("Error creating tags!");
-//     throw error;
-//   }
-// }
 
 async function rebuildDB() {
   try {

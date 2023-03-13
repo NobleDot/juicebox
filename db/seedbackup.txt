@@ -1,0 +1,60 @@
+Just saving some code to troubleshoot a possible commenting syntax error.
+
+This is what I removed from seed.js
+// ------------
+// They tell use to remove this after updated createPost and createInitialPost
+// ------------
+
+// async function createInitialTags() {
+//   try {
+//     console.log("Starting to create tags...");
+
+//     const [happy, sad, inspo, catman] = await createTags([
+//       '#happy', 
+//       '#worst-day-ever', 
+//       '#youcandoanything',
+//       '#catmandoeverything'
+//     ]);
+
+//     const [postOne, postTwo, postThree] = await getAllPosts();
+
+//     await addTagsToPost(postOne.id, [happy, inspo]);
+//     await addTagsToPost(postTwo.id, [sad, inspo]);
+//     await addTagsToPost(postThree.id, [happy, catman, inspo]);
+
+//     console.log("Finished creating tags!");
+//   } catch (error) {
+//     console.log("Error creating tags!");
+//     throw error;
+//   }
+// }
+
+
+//-----------
+// The guide says we remove this function,
+// but I'm confused with my error screen and will keep this here
+// just in case
+//-----------
+// async function createInitialTags() {
+//   try {
+//     console.log("Starting to create tags...");
+
+//     const [happy, sad, inspo, catman] = await createTags([
+//       '#happy', 
+//       '#worst-day-ever', 
+//       '#youcandoanything',
+//       '#catmandoeverything'
+//     ]);
+
+//     const [postOne, postTwo, postThree] = await getAllPosts();
+
+//     await addTagsToPost(postOne.id, [happy, inspo]);
+//     await addTagsToPost(postTwo.id, [sad, inspo]);
+//     await addTagsToPost(postThree.id, [happy, catman, inspo]);
+
+//     console.log("Finished creating tags!");
+//   } catch (error) {
+//     console.log("Error creating tags!");
+//     throw error;
+//   }
+// }
