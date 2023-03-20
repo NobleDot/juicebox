@@ -1,6 +1,9 @@
+require('dotenv').config();
 const { Client } = require('pg');
 
-const client = new Client('postgres://localhost:5432/juicebox-dev');
+// I guess this is only for testing locally?
+// const client = new Client('postgres://localhost:5432/juicebox-dev');
+const client = new Client(process.env.DATABASE_URL);
 
 async function createUser({ username, password, name, location }) {
     try {
@@ -9,11 +12,8 @@ async function createUser({ username, password, name, location }) {
             VALUES ($1, $2, $3, $4)
             ON CONFLICT (username) DO NOTHING 
             RETURNING *;
-            
         `, [username, password, name, location]);
-
         return user;
-
     } catch (error) {
     throw error;
     }
