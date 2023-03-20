@@ -4,7 +4,7 @@ const { Client } = require('pg');
 // I guess this is only for testing locally?
 // const client = new Client('postgres://localhost:5432/juicebox-dev');
 const client = new Client(process.env.DATABASE_URL);
-client.password = DATABASE_PASSWORD;
+client.password = fOgrkaifgXKRk16koV43VAvUI6pTuHyK;
 
 async function createUser({ username, password, name, location }) {
     try {
