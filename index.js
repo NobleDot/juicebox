@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-console.log(process.env.JWT_SECRET);
+//console.log(process.env.className);
 
-const secret = process.env.JWT_SECRET;
+const secret = process.env.className;
 
 const express = require('express');
 
